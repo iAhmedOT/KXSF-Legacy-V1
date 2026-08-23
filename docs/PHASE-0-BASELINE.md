@@ -57,6 +57,16 @@ Any legacy code reused later must earn its place through an explicit review and 
 
 Ahmed owns product direction, visual selection, architecture decisions, acceptance testing, and any hands-on work he chooses to perform. Pixel provides implementation, technical teaching, verification, and explicit attribution. Major decisions pause for Ahmed; reversible implementation details do not require unnecessary approval.
 
+## Model-routing strategy
+
+- **Terra:** default collaboration model for Phase 1 planning, routine SwiftUI implementation, tests, documentation, and ordinary debugging.
+- **Sol:** escalation model for architecture decisions, difficult playback/concurrency failures, security/privacy review, App Store migration, and final release review.
+- **Local Gemma 4 12B:** bounded worker for inventories, log summaries, draft documentation, repetitive transformations, and other low-risk tasks whose output is independently checked. Do not make it the global delegation default or allow it to perform destructive/publication actions without stronger-model review and real tests.
+
+LM Studio is serving `google/gemma-4-12b` locally at `http://127.0.0.1:1234/v1`. Tool-calling reliability still needs a bounded read-only validation before Gemma receives repository work.
+
+Hermes's installed pricing table lists Terra at half Sol's per-token API rates. The active provider is ChatGPT/Codex OAuth, whose weekly subscription-quota weighting is not documented by Hermes; switching to Terra should not be represented as a guaranteed 50% quota reduction.
+
 ## Phase 0 exit criteria
 
 - [x] Identify the App Store source repository and baseline commit
@@ -65,5 +75,5 @@ Ahmed owns product direction, visual selection, architecture decisions, acceptan
 - [x] Push a durable App Store baseline tag
 - [x] Create an isolated rebuild branch
 - [x] Record preservation and migration boundaries
-- [ ] Decide the model-routing strategy for Sol, Terra, and local Gemma
+- [x] Decide the model-routing strategy for Sol, Terra, and local Gemma
 - [ ] Confirm Phase 1 product and platform constraints collaboratively
