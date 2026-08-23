@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23966F4EAAE18174E700FE17 /* ListenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D4783D90A10118C27DBBE /* ListenView.swift */; };
 		278DD475470DA2DA6203EE5D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FDE0AC597C948C01F8DF29 /* ContentView.swift */; };
 		45930623B2CF981DDE119EEB /* KXSFMidnightGlassApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEF4BB7BCA273B428B01138 /* KXSFMidnightGlassApp.swift */; };
+		4C64F7CC139BD0A06AA8C24A /* LiveShowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A006DFFAD72FB435999DE95 /* LiveShowStore.swift */; };
+		5C44BCB4F2471DCF880F2B73 /* StationPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D28D5F208CB405EB47A5E4 /* StationPages.swift */; };
 		A58F5D8EC6B9B9A6AB7AC439 /* AudioPlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087757E2A3BDDBB30506B215 /* AudioPlayerService.swift */; };
+		E1C39171E88F02E960F8CDFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 651CF21F71620034715FA190 /* Assets.xcassets */; };
 		E3CE08451C343E977D0241FD /* KXSFMidnightGlassCore in Frameworks */ = {isa = PBXBuildFile; productRef = BC167BB657991D49952FADAC /* KXSFMidnightGlassCore */; };
 		E76E6C12A7D49A2573B657A8 /* KXSFMidnightGlassUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782A01AC3764A074AC7A49DC /* KXSFMidnightGlassUITests.swift */; };
 /* End PBXBuildFile section */
@@ -29,8 +33,12 @@
 		087757E2A3BDDBB30506B215 /* AudioPlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerService.swift; sourceTree = "<group>"; };
 		1DEF4BB7BCA273B428B01138 /* KXSFMidnightGlassApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KXSFMidnightGlassApp.swift; sourceTree = "<group>"; };
 		2CDC039C43E0460718F5601A /* MidnightGlass */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MidnightGlass; path = .; sourceTree = SOURCE_ROOT; };
+		651CF21F71620034715FA190 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6A006DFFAD72FB435999DE95 /* LiveShowStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveShowStore.swift; sourceTree = "<group>"; };
+		73D28D5F208CB405EB47A5E4 /* StationPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationPages.swift; sourceTree = "<group>"; };
 		782A01AC3764A074AC7A49DC /* KXSFMidnightGlassUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KXSFMidnightGlassUITests.swift; sourceTree = "<group>"; };
 		86FDE0AC597C948C01F8DF29 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		8E4D4783D90A10118C27DBBE /* ListenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenView.swift; sourceTree = "<group>"; };
 		C7F47DBC568A4C482A389F60 /* KXSFMidnightGlass.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = KXSFMidnightGlass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -46,6 +54,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2818B7F3AD11A9CBFE7F4056 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				651CF21F71620034715FA190 /* Assets.xcassets */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		36D06992AEECB0F2E68F4E12 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -66,6 +82,7 @@
 		3F7954A5C8998E950473F176 = {
 			isa = PBXGroup;
 			children = (
+				2818B7F3AD11A9CBFE7F4056 /* App */,
 				36E4244490FF7CA3EC885ED5 /* Packages */,
 				497EB4AD18A9977A4F9FE60A /* Sources */,
 				5B14996C820E378CB7D68A96 /* UITests */,
@@ -79,6 +96,9 @@
 				087757E2A3BDDBB30506B215 /* AudioPlayerService.swift */,
 				86FDE0AC597C948C01F8DF29 /* ContentView.swift */,
 				1DEF4BB7BCA273B428B01138 /* KXSFMidnightGlassApp.swift */,
+				8E4D4783D90A10118C27DBBE /* ListenView.swift */,
+				6A006DFFAD72FB435999DE95 /* LiveShowStore.swift */,
+				73D28D5F208CB405EB47A5E4 /* StationPages.swift */,
 			);
 			name = Sources;
 			path = App/Sources;
@@ -119,6 +139,7 @@
 			buildConfigurationList = FC0A0ACF426D545C1369C4F9 /* Build configuration list for PBXNativeTarget "KXSFMidnightGlass" */;
 			buildPhases = (
 				569E4A560F2580729ADAF7FC /* Sources */,
+				6974F242D0BA1519E5975895 /* Resources */,
 				3679030E6986F4698E49FD8D /* Frameworks */,
 			);
 			buildRules = (
@@ -170,6 +191,17 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		6974F242D0BA1519E5975895 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1C39171E88F02E960F8CDFE /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		569E4A560F2580729ADAF7FC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -178,6 +210,9 @@
 				A58F5D8EC6B9B9A6AB7AC439 /* AudioPlayerService.swift in Sources */,
 				278DD475470DA2DA6203EE5D /* ContentView.swift in Sources */,
 				45930623B2CF981DDE119EEB /* KXSFMidnightGlassApp.swift in Sources */,
+				23966F4EAAE18174E700FE17 /* ListenView.swift in Sources */,
+				4C64F7CC139BD0A06AA8C24A /* LiveShowStore.swift in Sources */,
+				5C44BCB4F2471DCF880F2B73 /* StationPages.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,7 +254,7 @@
 		1A027F5CD953EAFF6B9A1D98 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = App/Info.plist;
@@ -237,7 +272,7 @@
 		40FCC03D192E48AE21B428A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = App/Info.plist;

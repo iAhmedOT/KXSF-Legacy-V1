@@ -1,93 +1,143 @@
 import SwiftUI
-import KXSFMidnightGlassCore
 
 struct ContentView: View {
     @StateObject private var player = AudioPlayerService()
+    @State private var selectedTab: StationTab = .listen
 
     var body: some View {
-        ZStack {
-            LinearGradient(
-                colors: [Color.black, Color(red: 0.06, green: 0.08, blue: 0.13)],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
+        GeometryReader { geometry in
+            let navigationHeight: CGFloat = 70
+            let bottomGap = max(12, geometry.safeAreaInsets.bottom + 4)
+            let contentHeight = geometry.size.height - navigationHeight - bottomGap
 
-            VStack(spacing: 28) {
-                Spacer()
+            ZStack {
+                StationBackdrop(isLive: player.state.isPlaying)
 
-                Text("KXSF")
-                    .font(.system(size: 60, weight: .black, design: .rounded))
-                    .foregroundStyle(.white)
-                    .accessibilityAddTraits(.isHeader)
+                selectedDestination
+                    .frame(
+                        width: geometry.size.width,
+                        height: contentHeight,
+                        alignment: .top
+                    )
+                    .clipped()
+                    .position(
+                        x: geometry.size.width / 2,
+                        y: contentHeight / 2
+                    )
 
-                Text("102.5 FM · San Francisco")
-                    .font(.headline)
-                    .foregroundStyle(.white.opacity(0.72))
-
-                VStack(spacing: 8) {
-                    Text(statusTitle)
-                        .font(.title2.weight(.semibold))
-                        .accessibilityIdentifier("playback-status")
-                    Text(statusDetail)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
-                .multilineTextAlignment(.center)
-                .padding(24)
-                .frame(maxWidth: .infinity)
-                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28))
-                .padding(.horizontal, 24)
-
-                playbackControl
-
-                Spacer()
+                StationTabBar(selectedTab: $selectedTab)
+                    .frame(width: geometry.size.width - 40, height: navigationHeight)
+                    .position(
+                        x: geometry.size.width / 2,
+                        y: geometry.size.height - bottomGap - (navigationHeight / 2)
+                    )
             }
-            .foregroundStyle(.white)
+            .frame(width: geometry.size.width, height: geometry.size.height)
         }
+        .ignoresSafeArea()
+        .preferredColorScheme(.dark)
     }
 
     @ViewBuilder
-    private var playbackControl: some View {
-        if #available(iOS 26.0, *) {
-            playbackButton.buttonStyle(.glass)
-        } else {
-            playbackButton.buttonStyle(.borderedProminent)
+    private var selectedDestination: some View {
+        switch selectedTab {
+        case .listen:
+            ListenView(player: player)
+        case .shows:
+            ShowsView()
+        case .calendar:
+            CalendarView()
+        case .about:
+            AboutKXSFView()
+        }
+    }
+}
+
+enum StationTab: String, CaseIterable, Identifiable {
+    case listen, shows, calendar, about
+
+    var id: Self { self }
+
+    var title: String {
+        switch self {
+        case .listen: "Listen"
+        case .shows: "Shows"
+        case .calendar: "Calendar"
+        case .about: "About"
         }
     }
 
-    private var playbackButton: some View {
-        Button(action: player.togglePlayback) {
-            Image(systemName: player.state.isPlaying ? "pause.fill" : "play.fill")
-                .font(.system(size: 32, weight: .bold))
-                .frame(width: 88, height: 88)
-        }
-        .accessibilityIdentifier("playback-control")
-        .accessibilityLabel(player.state.isPlaying ? "Pause KXSF" : "Play KXSF")
-    }
-
-    private var statusTitle: String {
-        switch player.state {
-        case .idle:
-            "Ready to listen"
-        case .loading:
-            "Connecting to KXSF…"
-        case .playing:
-            "Live on KXSF"
-        case .failed:
-            "Stream unavailable"
+    var icon: String {
+        switch self {
+        case .listen: "dot.radiowaves.left.and.right"
+        case .shows: "music.mic"
+        case .calendar: "calendar"
+        case .about: "info.circle"
         }
     }
+}
 
-    private var statusDetail: String {
-        switch player.state {
-        case .failed:
-            "Please try again in a moment."
-        case .loading:
-            "Preparing the live stream"
-        default:
-            "102.5 FM · San Francisco"
+struct StationBackdrop: View {
+    let isLive: Bool
+    private let canvas = Color(red: 0.02, green: 0.02, blue: 0.02)
+    private let signalRed = Color(red: 0.71, green: 0.11, blue: 0.14)
+    private let signalYellow = Color(red: 0.95, green: 0.77, blue: 0.10)
+
+    var body: some View {
+        ZStack {
+            canvas
+            Circle()
+                .fill(signalRed.opacity(isLive ? 0.22 : 0.14))
+                .frame(width: 340, height: 340)
+                .blur(radius: 104)
+                .offset(x: -120, y: -240)
+            Circle()
+                .fill(signalYellow.opacity(isLive ? 0.12 : 0.07))
+                .frame(width: 260, height: 260)
+                .blur(radius: 100)
+                .offset(x: 150, y: 180)
+            LinearGradient(
+                colors: [.clear, .black.opacity(0.40)],
+                startPoint: .top,
+                endPoint: .bottom
+            )
         }
+        .accessibilityHidden(true)
+    }
+}
+
+private struct StationTabBar: View {
+    @Binding var selectedTab: StationTab
+    private let active = Color(red: 0.95, green: 0.77, blue: 0.10)
+
+    var body: some View {
+        HStack(spacing: 4) {
+            ForEach(StationTab.allCases) { tab in
+                Button {
+                    selectedTab = tab
+                } label: {
+                    VStack(spacing: 4) {
+                        Image(systemName: tab.icon)
+                            .font(.system(size: 19, weight: .semibold))
+                        Text(tab.title)
+                            .font(.caption2.weight(.semibold))
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .foregroundStyle(selectedTab == tab ? active : .white.opacity(0.70))
+                    .background {
+                        if selectedTab == tab {
+                            Capsule().fill(.white.opacity(0.12))
+                        }
+                    }
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("tab-\(tab.rawValue)")
+                .accessibilityLabel(tab.title)
+            }
+        }
+        .padding(6)
+        .background(.ultraThinMaterial, in: Capsule())
+        .overlay { Capsule().stroke(.white.opacity(0.14), lineWidth: 1) }
     }
 }
 
