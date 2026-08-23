@@ -1,0 +1,55 @@
+name: KXSFMidnightGlass
+options:
+  bundleIdPrefix: com.KXSF
+  deploymentTarget:
+    iOS: "18.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+packages:
+  KXSFMidnightGlassCore:
+    path: .
+targets:
+  KXSFMidnightGlass:
+    type: application
+    platform: iOS
+    sources:
+      - path: App/Sources
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: KXSF
+        NSAppTransportSecurity:
+          NSExceptionDomains:
+            stream.kxsf.fm:
+              NSExceptionAllowsInsecureHTTPLoads: true
+              NSIncludesSubdomains: true
+        UIBackgroundModes:
+          - audio
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: NO
+        PRODUCT_BUNDLE_IDENTIFIER: com.KXSF.fm
+        PRODUCT_NAME: KXSF
+        TARGETED_DEVICE_FAMILY: "1"
+    dependencies:
+      - package: KXSFMidnightGlassCore
+        product: KXSFMidnightGlassCore
+  KXSFMidnightGlassUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: App/UITests
+    dependencies:
+      - target: KXSFMidnightGlass
+schemes:
+  KXSFMidnightGlass:
+    build:
+      targets:
+        KXSFMidnightGlass: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - KXSFMidnightGlassUITests
