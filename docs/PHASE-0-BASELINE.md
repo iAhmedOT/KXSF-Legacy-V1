@@ -76,4 +76,4 @@ Hermes's installed pricing table lists Terra at half Sol's per-token API rates. 
 - [x] Create an isolated rebuild branch
 - [x] Record preservation and migration boundaries
 - [x] Decide the model-routing strategy for Sol, Terra, and local Gemma
-- [ ] Confirm Phase 1 product and platform constraints collaboratively
+- [x] Confirm Phase 1 product and platform constraints collaboratively
