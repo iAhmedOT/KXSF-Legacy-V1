@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var player = AudioPlayerService()
+    @StateObject private var liveShow = LiveShowStore()
     @State private var selectedTab: StationTab = .listen
 
     var body: some View {
@@ -36,17 +37,18 @@ struct ContentView: View {
         }
         .ignoresSafeArea()
         .preferredColorScheme(.dark)
+        .task { await liveShow.refresh() }
     }
 
     @ViewBuilder
     private var selectedDestination: some View {
         switch selectedTab {
         case .listen:
-            ListenView(player: player)
+            ListenView(player: player, liveShow: liveShow)
         case .shows:
-            ShowsView()
+            ShowsView(liveShow: liveShow)
         case .calendar:
-            CalendarView()
+            CalendarView(liveShow: liveShow)
         case .about:
             AboutKXSFView()
         }

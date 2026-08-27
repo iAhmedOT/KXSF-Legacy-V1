@@ -81,7 +81,32 @@ The earlier main-thread AVAudioSession warning is absent after the audio-session
 
 The iOS 27 Simulator runtime had been missing from both local Xcode installations. It was installed through Xcode before this verification. Xcode 27 beta still emits a duplicate WebCore/WebKit accessibility-loader warning from the Simulator runtime; it does not originate in KXSF source and did not fail the suite.
 
-## Next ownership priorities
+## Schedule and artwork enhancement — 2026-08-27
+
+The Listen screen now reuses KXSF’s official `schedule-shows` page as a single source for current-show metadata and artwork. The new core parser produces structured weekday, show, time range, destination URL, official artwork URL, and `Now playing` state while deliberately skipping incomplete cards instead of inventing a schedule entry.
+
+### Product behavior
+
+- **Listen:** the existing status card now includes an official Now Playing artwork row when KXSF publishes an active show with artwork. Artwork is fetched remotely and never treated as required: slow, unavailable, or failed artwork renders a station-themed music-note fallback.
+- **Shows:** displays the active show plus a short native weekly view; each entry opens its official KXSF detail page.
+- **Calendar:** retains its standalone destination and displays the full native weekly schedule grouped by weekday; the original official station calendar and events links remain available.
+- **Failure state:** if KXSF’s schedule page is unavailable or its markup no longer parses into usable records, both destinations communicate that honestly and preserve official fallbacks.
+
+### Verification evidence
+
+```text
+swift test
+Executed 12 tests, with 0 failures.
+
+xcodebuild ... -destination id=<iPhone 17 Pro Simulator> test
+Executed 3 tests, with 0 failures.
+** TEST SUCCEEDED **
+```
+
+The core suite includes four schedule-parser tests covering weekday grouping, show/artwork metadata, the current-show record, and incomplete-card rejection. The iPhone 17 Pro UI suite verifies that the Play control is still hittable, the new native Shows and Calendar schedule surfaces are reachable, and the real stream still reaches `Live on KXSF`.
+
+A fresh visual artifact, `docs/screenshots/kxsf-schedule-artwork-iphone17pro-ios27.png`, confirms official KXSF artwork rendered in the Now Playing card while the logo, card, 108-point Play control, floating navigation, and home-indicator clearance remained clean.
+
 
 1. Validate the same Listen/navigation composition with larger Dynamic Type.
 2. Verify background/foreground playback behavior in the Simulator and later on a physical iPhone.

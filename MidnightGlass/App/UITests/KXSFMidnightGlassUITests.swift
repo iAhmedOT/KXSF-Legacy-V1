@@ -21,9 +21,11 @@ final class KXSFMidnightGlassUITests: XCTestCase {
 
         app.buttons["tab-shows"].tap()
         XCTAssertTrue(app.staticTexts["Shows"].exists)
+        XCTAssertTrue(app.otherElements["schedule-shows-content"].exists)
 
         app.buttons["tab-calendar"].tap()
         XCTAssertTrue(app.staticTexts["Calendar"].exists)
+        XCTAssertTrue(app.otherElements["schedule-calendar-content"].exists)
 
         app.buttons["tab-about"].tap()
         XCTAssertTrue(app.staticTexts["About KXSF"].exists)

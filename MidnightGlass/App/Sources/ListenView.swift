@@ -3,7 +3,7 @@ import KXSFMidnightGlassCore
 
 struct ListenView: View {
     @ObservedObject var player: AudioPlayerService
-    @StateObject private var liveShow = LiveShowStore()
+    @ObservedObject var liveShow: LiveShowStore
 
     private let signalRed = Color(red: 0.71, green: 0.11, blue: 0.14)
     private let signalYellow = Color(red: 0.95, green: 0.77, blue: 0.10)
@@ -24,11 +24,10 @@ struct ListenView: View {
         .padding(.top, 24)
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, alignment: .top)
-        .task { await liveShow.refresh() }
     }
 
     private var statusPanel: some View {
-        VStack(spacing: 9) {
+        VStack(spacing: 12) {
             Text(statusEyebrow)
                 .font(.caption.weight(.bold))
                 .tracking(1.1)
@@ -46,6 +45,12 @@ struct ListenView: View {
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
                 .foregroundStyle(.white.opacity(0.68))
+
+            if let currentShow = liveShow.currentShow {
+                Divider().overlay(.white.opacity(0.14))
+                NowPlayingArtwork(show: currentShow)
+                    .accessibilityIdentifier("now-playing-artwork")
+            }
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 18)
@@ -103,6 +108,76 @@ struct ListenView: View {
                 ? "Independent community radio, live from San Francisco"
                 : "Live now on KXSF"
         case .idle: "Tap Play to listen live"
+        }
+    }
+}
+
+private struct NowPlayingArtwork: View {
+    let show: KXSFShow
+
+    var body: some View {
+        HStack(spacing: 12) {
+            ShowArtwork(show: show, size: 72)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text("NOW PLAYING")
+                    .font(.caption2.weight(.bold))
+                    .tracking(1)
+                    .foregroundStyle(.white.opacity(0.56))
+                Text(show.name)
+                    .font(.subheadline.weight(.semibold))
+                    .lineLimit(2)
+                    .foregroundStyle(.white)
+                Text("\(show.day.rawValue) · \(show.timeRange)")
+                    .font(.caption)
+                    .lineLimit(1)
+                    .foregroundStyle(.white.opacity(0.66))
+            }
+            Spacer(minLength: 0)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Now playing: \(show.name), \(show.day.rawValue), \(show.timeRange)")
+    }
+}
+
+struct ShowArtwork: View {
+    let show: KXSFShow
+    let size: CGFloat
+
+    var body: some View {
+        Group {
+            if let artworkURL = show.artworkURL {
+                AsyncImage(url: artworkURL, transaction: Transaction(animation: .default)) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image.resizable().scaledToFill()
+                    default:
+                        artworkFallback
+                    }
+                }
+            } else {
+                artworkFallback
+            }
+        }
+        .frame(width: size, height: size)
+        .clipShape(RoundedRectangle(cornerRadius: size * 0.22, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: size * 0.22, style: .continuous)
+                .stroke(.white.opacity(0.16), lineWidth: 1)
+        }
+        .accessibilityHidden(true)
+    }
+
+    private var artworkFallback: some View {
+        ZStack {
+            LinearGradient(
+                colors: [Color(red: 0.71, green: 0.11, blue: 0.14), Color(red: 0.12, green: 0.08, blue: 0.04)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            Image(systemName: "music.note")
+                .font(.system(size: size * 0.34, weight: .bold))
+                .foregroundStyle(Color(red: 0.95, green: 0.77, blue: 0.10))
         }
     }
 }
