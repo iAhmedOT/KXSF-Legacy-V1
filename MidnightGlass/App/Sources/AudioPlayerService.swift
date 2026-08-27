@@ -23,12 +23,19 @@ final class AudioPlayerService: NSObject, ObservableObject {
         guard !state.isPlaying else { return }
 
         state = state.applying(.playRequested)
-        configureAudioSession()
 
-        let player = AVPlayer(url: endpoint.liveStreamURL)
-        self.player = player
-        observePlaybackState(of: player)
-        player.play()
+        Task { [weak self] in
+            guard await Self.configureAudioSession() else {
+                self?.state = .failed(.streamUnavailable)
+                return
+            }
+            guard let self else { return }
+
+            let player = AVPlayer(url: endpoint.liveStreamURL)
+            self.player = player
+            observePlaybackState(of: player)
+            player.play()
+        }
     }
 
     func pause() {
@@ -36,14 +43,17 @@ final class AudioPlayerService: NSObject, ObservableObject {
         state = .idle
     }
 
-    private func configureAudioSession() {
-        do {
-            let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playback, mode: .default)
-            try session.setActive(true)
-        } catch {
-            state = .failed(.streamUnavailable)
-        }
+    private nonisolated static func configureAudioSession() async -> Bool {
+        await Task.detached(priority: .userInitiated) {
+            do {
+                let session = AVAudioSession.sharedInstance()
+                try session.setCategory(.playback, mode: .default)
+                try session.setActive(true)
+                return true
+            } catch {
+                return false
+            }
+        }.value
     }
 
     private func observePlaybackState(of player: AVPlayer) {

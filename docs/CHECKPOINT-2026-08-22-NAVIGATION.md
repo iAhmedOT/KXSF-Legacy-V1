@@ -1,5 +1,7 @@
 # KXSF Midnight Glass — Navigation Checkpoint
 
+> **Superseded on 2026-08-27:** the current shell was verified clean on an iPhone 17 Pro/iOS 27 Simulator. See `CHECKPOINT-2026-08-27-SIMULATOR-VERIFIED.md` and `screenshots/kxsf-listen-iphone17pro-ios27.png`.
+
 **Date:** 2026-08-22  
 **Branch:** `rebuild/midnight-glass`  
 **Checkpoint intent:** preserve the current work and stop visual iteration safely.

@@ -42,6 +42,9 @@ targets:
     platform: iOS
     sources:
       - path: App/UITests
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
     dependencies:
       - target: KXSFMidnightGlass
 schemes:

@@ -5,6 +5,7 @@ final class KXSFMidnightGlassUITests: XCTestCase {
     func test_launch_exposes_the_play_control() {
         let app = XCUIApplication()
         app.launch()
+        defer { app.terminate() }
 
         let playControl = app.buttons["playback-control"]
         XCTAssertTrue(playControl.exists)
@@ -16,6 +17,7 @@ final class KXSFMidnightGlassUITests: XCTestCase {
     func test_bottom_navigation_reaches_station_destinations() {
         let app = XCUIApplication()
         app.launch()
+        defer { app.terminate() }
 
         app.buttons["tab-shows"].tap()
         XCTAssertTrue(app.staticTexts["Shows"].exists)
@@ -27,9 +29,11 @@ final class KXSFMidnightGlassUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["About KXSF"].exists)
     }
 
+    @MainActor
     func test_play_starts_the_kxsf_stream() {
         let app = XCUIApplication()
         app.launch()
+        defer { app.terminate() }
 
         app.buttons["playback-control"].tap()
 
