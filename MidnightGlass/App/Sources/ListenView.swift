@@ -21,40 +21,56 @@ struct ListenView: View {
 
             playbackControl
         }
-        .padding(.top, 24)
+        .padding(.top, 48)
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, alignment: .top)
     }
 
     private var statusPanel: some View {
-        VStack(spacing: 12) {
-            Text(statusEyebrow)
-                .font(.caption.weight(.bold))
-                .tracking(1.1)
-                .foregroundStyle(signalYellow)
+        Group {
+            if player.state.isPlaying, let currentShow = liveShow.currentShow {
+                HStack(spacing: 16) {
+                    ShowArtwork(show: currentShow, size: 104)
 
-            Text(statusTitle)
-                .font(.title2.weight(.bold))
-                .multilineTextAlignment(.center)
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("NOW PLAYING")
+                            .font(.caption2.weight(.bold))
+                            .tracking(1.1)
+                            .foregroundStyle(signalYellow)
+                        Text(currentShow.name)
+                            .font(.title3.weight(.bold))
+                            .lineLimit(2)
+                            .foregroundStyle(.white)
+                        if let hostName = currentShow.hostName {
+                            Text("with \(hostName)")
+                                .font(.subheadline)
+                                .foregroundStyle(.white.opacity(0.72))
+                        }
+                        Text(currentShow.timeRange)
+                            .font(.subheadline.weight(.medium))
+                            .foregroundStyle(signalYellow)
+                    }
+                    Spacer(minLength: 0)
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("now-playing-card")
+                .accessibilityLabel("Now playing: \(currentShow.name), \(currentShow.hostName ?? "host unavailable"), \(currentShow.timeRange)")
+            } else {
+                VStack(spacing: 6) {
+                    Text(statusEyebrow)
+                        .font(.caption.weight(.bold))
+                        .tracking(1.1)
+                        .foregroundStyle(signalYellow)
+                    Text(statusTitle)
+                        .font(.title2.weight(.bold))
+                        .multilineTextAlignment(.center)
+                }
                 .accessibilityIdentifier("playback-status")
                 .accessibilityLabel(player.state.isPlaying ? "Live on KXSF" : statusTitle)
-
-            Text(statusDetail)
-                .font(.subheadline)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .fixedSize(horizontal: false, vertical: true)
-                .foregroundStyle(.white.opacity(0.68))
-
-            if let currentShow = liveShow.currentShow {
-                Divider().overlay(.white.opacity(0.14))
-                NowPlayingArtwork(show: currentShow)
-                    .accessibilityIdentifier("now-playing-artwork")
             }
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 18)
-        .padding(.horizontal, 20)
+        .padding(18)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28))
         .overlay {
             RoundedRectangle(cornerRadius: 28)

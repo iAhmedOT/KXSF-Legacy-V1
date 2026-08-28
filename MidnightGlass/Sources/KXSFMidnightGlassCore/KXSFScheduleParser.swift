@@ -18,6 +18,7 @@ public struct KXSFShow: Sendable, Equatable, Identifiable {
     public let timeRange: String
     public let detailURL: URL
     public let artworkURL: URL?
+    public let hostName: String?
     public let isNowPlaying: Bool
 
     public var id: String { detailURL.absoluteString }
@@ -28,6 +29,7 @@ public struct KXSFShow: Sendable, Equatable, Identifiable {
         timeRange: String,
         detailURL: URL,
         artworkURL: URL?,
+        hostName: String? = nil,
         isNowPlaying: Bool
     ) {
         self.day = day
@@ -35,6 +37,7 @@ public struct KXSFShow: Sendable, Equatable, Identifiable {
         self.timeRange = timeRange
         self.detailURL = detailURL
         self.artworkURL = artworkURL
+        self.hostName = hostName
         self.isNowPlaying = isNowPlaying
     }
 }
@@ -56,6 +59,11 @@ public struct KXSFSchedule: Sendable, Equatable {
 
     public var shows: [KXSFShow] { sections.flatMap(\.shows) }
     public var currentShow: KXSFShow? { shows.first(where: \.isNowPlaying) }
+
+    public func sections(startingWith day: KXSFWeekday) -> [KXSFScheduleSection] {
+        guard let startIndex = sections.firstIndex(where: { $0.day == day }) else { return sections }
+        return Array(sections[startIndex...]) + Array(sections[..<startIndex])
+    }
 
     public init(sections: [KXSFScheduleSection]) {
         self.sections = sections

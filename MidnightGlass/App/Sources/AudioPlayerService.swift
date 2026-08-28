@@ -4,6 +4,8 @@ import KXSFMidnightGlassCore
 
 @MainActor
 final class AudioPlayerService: NSObject, ObservableObject {
+    static let shared = AudioPlayerService()
+
     @Published private(set) var state: PlaybackState = .idle
 
     private let endpoint: any StreamEndpointProviding

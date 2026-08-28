@@ -1,43 +1,76 @@
 import SwiftUI
+import WidgetKit
 
 struct ContentView: View {
-    @StateObject private var player = AudioPlayerService()
+    @StateObject private var player = AudioPlayerService.shared
     @StateObject private var liveShow = LiveShowStore()
     @State private var selectedTab: StationTab = .listen
+    @State private var browserDestination: InAppBrowserDestination?
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         GeometryReader { geometry in
             let navigationHeight: CGFloat = 70
-            let bottomGap = max(12, geometry.safeAreaInsets.bottom + 4)
-            let contentHeight = geometry.size.height - navigationHeight - bottomGap
+            let navigationSafeAreaOverlap: CGFloat = 16
 
             ZStack {
                 StationBackdrop(isLive: player.state.isPlaying)
+                    .ignoresSafeArea()
 
                 selectedDestination
-                    .frame(
-                        width: geometry.size.width,
-                        height: contentHeight,
-                        alignment: .top
-                    )
-                    .clipped()
-                    .position(
-                        x: geometry.size.width / 2,
-                        y: contentHeight / 2
-                    )
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
 
                 StationTabBar(selectedTab: $selectedTab)
                     .frame(width: geometry.size.width - 40, height: navigationHeight)
                     .position(
                         x: geometry.size.width / 2,
-                        y: geometry.size.height - bottomGap - (navigationHeight / 2)
+                        y: geometry.size.height + navigationSafeAreaOverlap - (navigationHeight / 2)
                     )
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
         }
-        .ignoresSafeArea()
         .preferredColorScheme(.dark)
-        .task { await liveShow.refresh() }
+        .task {
+            KXSFPlaybackSnapshot.setIsPlaying(player.state.isPlaying)
+            await liveShow.refresh()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            guard phase == .active else { return }
+            Task { await liveShow.refresh() }
+        }
+        .onChange(of: player.state) { _, state in
+            KXSFPlaybackSnapshot.setIsPlaying(state.isPlaying)
+            WidgetCenter.shared.reloadTimelines(ofKind: "KXSFHomeWidget")
+            Task {
+                KXSFLiveActivityManager.synchronize(
+                    showTitle: liveShow.showName ?? "Live on KXSF",
+                    hostName: liveShow.currentShow?.hostName,
+                    timeRange: liveShow.currentShow?.timeRange,
+                    artworkURL: liveShow.currentShow?.artworkURL?.absoluteString,
+                    isPlaying: state.isPlaying
+                )
+            }
+        }
+        .onChange(of: liveShow.showName) { _, showName in
+            guard player.state.isPlaying else { return }
+            Task {
+                KXSFLiveActivityManager.synchronize(
+                    showTitle: showName ?? "Live on KXSF",
+                    hostName: liveShow.currentShow?.hostName,
+                    timeRange: liveShow.currentShow?.timeRange,
+                    artworkURL: liveShow.currentShow?.artworkURL?.absoluteString,
+                    isPlaying: true
+                )
+            }
+        }
+        .environment(\.openURL, OpenURLAction { url in
+            browserDestination = InAppBrowserDestination(url: url)
+            return .handled
+        })
+        .sheet(item: $browserDestination) { destination in
+            InAppBrowser(url: destination.url)
+                .ignoresSafeArea()
+        }
     }
 
     @ViewBuilder
@@ -47,8 +80,8 @@ struct ContentView: View {
             ListenView(player: player, liveShow: liveShow)
         case .shows:
             ShowsView(liveShow: liveShow)
-        case .calendar:
-            CalendarView(liveShow: liveShow)
+        case .live:
+            KXSFLiveView(liveShow: liveShow)
         case .about:
             AboutKXSFView()
         }
@@ -56,7 +89,7 @@ struct ContentView: View {
 }
 
 enum StationTab: String, CaseIterable, Identifiable {
-    case listen, shows, calendar, about
+    case listen, shows, live, about
 
     var id: Self { self }
 
@@ -64,7 +97,7 @@ enum StationTab: String, CaseIterable, Identifiable {
         switch self {
         case .listen: "Listen"
         case .shows: "Shows"
-        case .calendar: "Calendar"
+        case .live: "KXSF Live"
         case .about: "About"
         }
     }
@@ -73,7 +106,7 @@ enum StationTab: String, CaseIterable, Identifiable {
         switch self {
         case .listen: "dot.radiowaves.left.and.right"
         case .shows: "music.mic"
-        case .calendar: "calendar"
+        case .live: "play.tv"
         case .about: "info.circle"
         }
     }

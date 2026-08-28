@@ -6,9 +6,10 @@ private let stationRed = Color(red: 0.71, green: 0.11, blue: 0.14)
 
 struct ShowsView: View {
     @ObservedObject var liveShow: LiveShowStore
+    @State private var expandedDay: KXSFWeekday?
 
     var body: some View {
-        StationPage(title: "Shows", eyebrow: "KXSF PROGRAMMING") {
+        StationPage(title: "Shows", eyebrow: nil) {
             scheduleSurface
                 .accessibilityElement(children: .contain)
                 .accessibilityIdentifier("schedule-shows-content")
@@ -16,6 +17,22 @@ struct ShowsView: View {
             Link(destination: URL(string: "https://kxsf.fm/shows/")!) {
                 StationLinkLabel(title: "Browse the complete show archive", symbol: "arrow.up.right.square")
             }
+        }
+        .task {
+            await liveShow.refresh()
+            if expandedDay == nil { expandedDay = listenerWeekday }
+        }
+    }
+
+    private var listenerWeekday: KXSFWeekday {
+        switch Calendar.current.component(.weekday, from: .now) {
+        case 1: .sunday
+        case 2: .monday
+        case 3: .tuesday
+        case 4: .wednesday
+        case 5: .thursday
+        case 6: .friday
+        default: .saturday
         }
     }
 
@@ -39,74 +56,104 @@ struct ShowsView: View {
                     ShowRow(show: currentShow, emphasis: true)
                 }
 
-                Text("THIS WEEK")
+                Text("UP NEXT")
                     .font(.caption.weight(.bold))
                     .tracking(1.1)
                     .foregroundStyle(.white.opacity(0.62))
 
-                ForEach(liveShow.schedule.sections) { section in
-                    VStack(alignment: .leading, spacing: 10) {
+                ForEach(liveShow.schedule.sections(startingWith: listenerWeekday)) { section in
+                    DisclosureGroup(
+                        isExpanded: Binding(
+                            get: { expandedDay == section.day },
+                            set: { isExpanded in expandedDay = isExpanded ? section.day : nil }
+                        )
+                    ) {
+                        VStack(spacing: 10) {
+                            ForEach(section.shows) { show in
+                                ScheduleRow(show: show)
+                            }
+                        }
+                        .padding(.top, 10)
+                    } label: {
                         Text(section.day.rawValue.uppercased())
                             .font(.headline)
                             .foregroundStyle(.white)
-                        ForEach(section.shows.prefix(3)) { show in
-                            ShowRow(show: show)
-                        }
-                        if section.shows.count > 3 {
-                            Text("+ \(section.shows.count - 3) more on \(section.day.rawValue)")
-                                .font(.caption.weight(.semibold))
-                                .foregroundStyle(.white.opacity(0.58))
-                                .padding(.leading, 4)
-                        }
                     }
+                    .tint(stationYellow)
+                    .padding(14)
+                    .background(.white.opacity(0.06), in: RoundedRectangle(cornerRadius: 20))
                 }
             }
         }
     }
 }
 
-struct CalendarView: View {
+struct KXSFLiveView: View {
     @ObservedObject var liveShow: LiveShowStore
 
     var body: some View {
-        StationPage(title: "Calendar", eyebrow: "WHAT’S ON") {
-            scheduleSurface
-                .accessibilityElement(children: .contain)
-                .accessibilityIdentifier("schedule-calendar-content")
-
-            Link(destination: URL(string: "https://spinitron.com/KXSF/calendar")!) {
-                StationLinkLabel(title: "Open the station calendar", symbol: "arrow.up.right.square")
-            }
-
-            Link(destination: URL(string: "https://kxsf.fm/events/")!) {
-                StationLinkLabel(title: "Station events", symbol: "ticket")
-            }
-        }
-    }
-
-    @ViewBuilder
-    private var scheduleSurface: some View {
-        if liveShow.isLoading && liveShow.schedule.shows.isEmpty {
-            StationCard(title: "Loading the calendar", detail: "Getting KXSF’s current weekly time slots.", symbol: "calendar.badge.clock")
-        } else if liveShow.schedule.sections.isEmpty {
-            StationCard(
-                title: "Official calendar unavailable",
-                detail: "The live KXSF schedule could not be loaded right now. You can still open the station calendar below.",
-                symbol: "wifi.exclamationmark"
-            )
-        } else {
-            VStack(alignment: .leading, spacing: 16) {
-                ForEach(liveShow.schedule.sections) { section in
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text(section.day.rawValue.uppercased())
-                            .font(.headline)
-                            .foregroundStyle(.white)
-                        ForEach(section.shows) { show in
-                            ScheduleRow(show: show)
+        StationPage(title: "KXSF Live", eyebrow: "LATEST FROM THE STATION") {
+            if liveShow.isLoadingUploads && liveShow.uploads.isEmpty {
+                StationCard(title: "Loading KXSF Live", detail: "Getting the latest official uploads from KXSF’s YouTube channel.", symbol: "play.tv")
+            } else if liveShow.uploads.isEmpty {
+                StationCard(title: "KXSF Live is unavailable", detail: "The latest uploads could not be loaded right now. Open the official channel below.", symbol: "wifi.exclamationmark")
+            } else {
+                VStack(alignment: .leading, spacing: 12) {
+                    ForEach(liveShow.uploads) { upload in
+                        Link(destination: upload.watchURL) {
+                            HStack(spacing: 14) {
+                                YouTubeThumbnail(upload: upload)
+                                VStack(alignment: .leading, spacing: 5) {
+                                    Text(upload.title)
+                                        .font(.subheadline.weight(.semibold))
+                                        .foregroundStyle(.white)
+                                        .lineLimit(3)
+                                }
+                                Spacer(minLength: 0)
+                            }
+                            .padding(10)
+                            .background(.white.opacity(0.06), in: RoundedRectangle(cornerRadius: 20))
                         }
                     }
                 }
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("kxsf-live-content")
             }
+
+            Link(destination: URL(string: "https://youtube.com/@kxsfradio")!) {
+                StationLinkLabel(title: "Open KXSF on YouTube", symbol: "play.rectangle")
+            }
+        }
+        .task { await liveShow.refreshUploads() }
+    }
+}
+
+private struct YouTubeThumbnail: View {
+    let upload: KXSFYouTubeUpload
+
+    var body: some View {
+        Group {
+            if let url = upload.thumbnailURL {
+                AsyncImage(url: url) { phase in
+                    if case let .success(image) = phase {
+                        image.resizable().scaledToFill()
+                    } else {
+                        fallback
+                    }
+                }
+            } else {
+                fallback
+            }
+        }
+        .frame(width: 108, height: 62)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .accessibilityHidden(true)
+    }
+
+    private var fallback: some View {
+        ZStack {
+            Color(red: 0.71, green: 0.11, blue: 0.14)
+            Image(systemName: "play.fill").foregroundStyle(.white)
         }
     }
 }
@@ -144,9 +191,11 @@ private struct ShowRow: View {
                         .font(emphasis ? .headline.weight(.bold) : .subheadline.weight(.semibold))
                         .foregroundStyle(.white)
                         .lineLimit(2)
-                    Text(show.timeRange)
-                        .font(.caption)
-                        .foregroundStyle(.white.opacity(0.66))
+                    if let hostName = show.hostName {
+                        Text("with \(hostName)")
+                            .font(.caption)
+                            .foregroundStyle(.white.opacity(0.66))
+                    }
                 }
                 Spacer(minLength: 0)
                 Image(systemName: "arrow.up.right")
@@ -167,14 +216,20 @@ private struct ScheduleRow: View {
     var body: some View {
         Link(destination: show.detailURL) {
             HStack(spacing: 12) {
-                Text(show.timeRange)
-                    .font(.caption.weight(.bold))
-                    .foregroundStyle(stationYellow)
-                    .frame(width: 94, alignment: .leading)
-                Text(show.name)
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(.white)
-                    .lineLimit(2)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(show.timeRange)
+                        .font(.caption.weight(.bold))
+                        .foregroundStyle(stationYellow)
+                    Text(show.name)
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(.white)
+                        .lineLimit(2)
+                    if let hostName = show.hostName {
+                        Text("with \(hostName)")
+                            .font(.caption)
+                            .foregroundStyle(.white.opacity(0.66))
+                    }
+                }
                 Spacer(minLength: 0)
                 Image(systemName: "chevron.right")
                     .font(.caption.weight(.bold))
@@ -190,21 +245,23 @@ private struct ScheduleRow: View {
 
 private struct StationPage<Content: View>: View {
     let title: String
-    let eyebrow: String
+    let eyebrow: String?
     @ViewBuilder let content: Content
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                Text(eyebrow)
-                    .font(.caption.weight(.bold))
-                    .tracking(1.15)
-                    .foregroundStyle(stationYellow)
+                if let eyebrow {
+                    Text(eyebrow)
+                        .font(.caption.weight(.bold))
+                        .tracking(1.15)
+                        .foregroundStyle(stationYellow)
+                }
                 Text(title)
                     .font(.largeTitle.weight(.bold))
                     .foregroundStyle(.white)
                 content
-                Spacer(minLength: 32)
+                Spacer(minLength: 112)
             }
             .padding(.horizontal, 24)
             .padding(.top, 32)

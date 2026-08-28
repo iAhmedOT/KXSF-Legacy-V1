@@ -15,11 +15,13 @@ targets:
     platform: iOS
     sources:
       - path: App/Sources
+      - path: App/Shared
       - path: App/Assets.xcassets
     info:
       path: App/Info.plist
       properties:
         CFBundleDisplayName: KXSF
+        NSSupportsLiveActivities: true
         NSAppTransportSecurity:
           NSExceptionDomains:
             stream.kxsf.fm:
@@ -30,10 +32,34 @@ targets:
     settings:
       base:
         ASSETCATALOG_COMPILER_APPICON_NAME: ""
+        CODE_SIGN_ENTITLEMENTS: App/KXSF.entitlements
         GENERATE_INFOPLIST_FILE: NO
         PRODUCT_BUNDLE_IDENTIFIER: com.KXSF.fm
         PRODUCT_NAME: KXSF
         TARGETED_DEVICE_FAMILY: "1"
+    dependencies:
+      - package: KXSFMidnightGlassCore
+        product: KXSFMidnightGlassCore
+      - target: KXSFLiveActivities
+        embed: true
+  KXSFLiveActivities:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: App/LiveActivity
+      - path: App/LiveActivitySupport
+      - path: App/Shared
+    info:
+      path: App/LiveActivity/Info.plist
+      properties:
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        CODE_SIGN_ENTITLEMENTS: App/LiveActivity/KXSFLiveActivities.entitlements
+        GENERATE_INFOPLIST_FILE: NO
+        PRODUCT_BUNDLE_IDENTIFIER: com.KXSF.fm.liveactivities
+        PRODUCT_NAME: KXSFLiveActivities
     dependencies:
       - package: KXSFMidnightGlassCore
         product: KXSFMidnightGlassCore

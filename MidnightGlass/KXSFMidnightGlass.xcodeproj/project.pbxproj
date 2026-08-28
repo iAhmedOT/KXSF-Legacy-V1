@@ -7,18 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		041D09C74A0E15766E4BE314 /* LiveArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E9270CF498EC7A249F0AA /* LiveArtwork.swift */; };
+		05D200ECE0133522977D94B1 /* KXSFLiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20346C876C51574EE9EFB2F /* KXSFLiveActivityAttributes.swift */; };
+		19DE898D2F30B3D39AB757A7 /* KXSFLiveActivities.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AACDDE3F1B85F71DD0EBFABF /* KXSFLiveActivities.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1B4CBFB841DADF78A40C233D /* KXSFLiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AF02D367B73F99D6770CC7 /* KXSFLiveActivityManager.swift */; };
+		1C7BA17A6627276995D3EA61 /* KXSFPlaybackSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5CE7BD60832242D149AFB3 /* KXSFPlaybackSnapshot.swift */; };
 		23966F4EAAE18174E700FE17 /* ListenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D4783D90A10118C27DBBE /* ListenView.swift */; };
 		278DD475470DA2DA6203EE5D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FDE0AC597C948C01F8DF29 /* ContentView.swift */; };
 		45930623B2CF981DDE119EEB /* KXSFMidnightGlassApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEF4BB7BCA273B428B01138 /* KXSFMidnightGlassApp.swift */; };
 		4C64F7CC139BD0A06AA8C24A /* LiveShowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A006DFFAD72FB435999DE95 /* LiveShowStore.swift */; };
 		5C44BCB4F2471DCF880F2B73 /* StationPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D28D5F208CB405EB47A5E4 /* StationPages.swift */; };
+		7A53F743C22087AE5E030B12 /* KXSFHomeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F8C5E6D93E6C1E308C924E /* KXSFHomeWidget.swift */; };
+		82659B68B33B453634F26865 /* KXSFLiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20346C876C51574EE9EFB2F /* KXSFLiveActivityAttributes.swift */; };
 		A58F5D8EC6B9B9A6AB7AC439 /* AudioPlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087757E2A3BDDBB30506B215 /* AudioPlayerService.swift */; };
+		AA04E1842E3B94D0C5C3D3C5 /* KXSFLiveActivities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DC4B1FA1F360E0143F5A08 /* KXSFLiveActivities.swift */; };
+		BE889AD9D73D5223A17A470C /* InAppBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF52D98EE0FCEF839EE28726 /* InAppBrowser.swift */; };
+		C5E6757DFC60836ACC29972D /* KXSFPlaybackSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5CE7BD60832242D149AFB3 /* KXSFPlaybackSnapshot.swift */; };
+		D2FE26A53B4A59CFC9EF3D95 /* ToggleKXSFPlaybackIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99EA44D20B853BBEE28FE8D /* ToggleKXSFPlaybackIntent.swift */; };
+		D8CCEF200CAA09CC402CDE0B /* ToggleKXSFPlaybackIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DE7D759B4AA91073C714C3 /* ToggleKXSFPlaybackIntent.swift */; };
+		DED0BBD790CDCDEDC991CFF4 /* KXSFMidnightGlassCore in Frameworks */ = {isa = PBXBuildFile; productRef = 447372DAF9D27653BE175CB0 /* KXSFMidnightGlassCore */; };
 		E1C39171E88F02E960F8CDFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 651CF21F71620034715FA190 /* Assets.xcassets */; };
 		E3CE08451C343E977D0241FD /* KXSFMidnightGlassCore in Frameworks */ = {isa = PBXBuildFile; productRef = BC167BB657991D49952FADAC /* KXSFMidnightGlassCore */; };
 		E76E6C12A7D49A2573B657A8 /* KXSFMidnightGlassUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782A01AC3764A074AC7A49DC /* KXSFMidnightGlassUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		6D01C27622FB737DA73A68F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 453CCA1C4D5DAFD5C156E480 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 22C9AEC87185505F91442F7F;
+			remoteInfo = KXSFLiveActivities;
+		};
 		7A5FE7F8C94DF63FF1670D88 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 453CCA1C4D5DAFD5C156E480 /* Project object */;
@@ -28,21 +48,55 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6D8E3F7B74B1419B6B4E4CE6 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				19DE898D2F30B3D39AB757A7 /* KXSFLiveActivities.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		01DE7D759B4AA91073C714C3 /* ToggleKXSFPlaybackIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleKXSFPlaybackIntent.swift; sourceTree = "<group>"; };
 		052C17FD98F780DF8D69102F /* KXSFMidnightGlassUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = KXSFMidnightGlassUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		087757E2A3BDDBB30506B215 /* AudioPlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerService.swift; sourceTree = "<group>"; };
+		0E5CE7BD60832242D149AFB3 /* KXSFPlaybackSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KXSFPlaybackSnapshot.swift; sourceTree = "<group>"; };
 		1DEF4BB7BCA273B428B01138 /* KXSFMidnightGlassApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KXSFMidnightGlassApp.swift; sourceTree = "<group>"; };
 		2CDC039C43E0460718F5601A /* MidnightGlass */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MidnightGlass; path = .; sourceTree = SOURCE_ROOT; };
+		54DC4B1FA1F360E0143F5A08 /* KXSFLiveActivities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KXSFLiveActivities.swift; sourceTree = "<group>"; };
 		651CF21F71620034715FA190 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		69F8C5E6D93E6C1E308C924E /* KXSFHomeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KXSFHomeWidget.swift; sourceTree = "<group>"; };
 		6A006DFFAD72FB435999DE95 /* LiveShowStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveShowStore.swift; sourceTree = "<group>"; };
 		73D28D5F208CB405EB47A5E4 /* StationPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationPages.swift; sourceTree = "<group>"; };
 		782A01AC3764A074AC7A49DC /* KXSFMidnightGlassUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KXSFMidnightGlassUITests.swift; sourceTree = "<group>"; };
+		84888D9C63D129A93F3215DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		86FDE0AC597C948C01F8DF29 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8E4D4783D90A10118C27DBBE /* ListenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenView.swift; sourceTree = "<group>"; };
+		AACDDE3F1B85F71DD0EBFABF /* KXSFLiveActivities.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = KXSFLiveActivities.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9AF02D367B73F99D6770CC7 /* KXSFLiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KXSFLiveActivityManager.swift; sourceTree = "<group>"; };
+		BE6E9270CF498EC7A249F0AA /* LiveArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveArtwork.swift; sourceTree = "<group>"; };
+		BF9E60D9C175FC462D604330 /* KXSFLiveActivities.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KXSFLiveActivities.entitlements; sourceTree = "<group>"; };
 		C7F47DBC568A4C482A389F60 /* KXSFMidnightGlass.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = KXSFMidnightGlass.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D20346C876C51574EE9EFB2F /* KXSFLiveActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KXSFLiveActivityAttributes.swift; sourceTree = "<group>"; };
+		D99EA44D20B853BBEE28FE8D /* ToggleKXSFPlaybackIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleKXSFPlaybackIntent.swift; sourceTree = "<group>"; };
+		FF52D98EE0FCEF839EE28726 /* InAppBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppBrowser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1F0FD13AD81961617B54CBAA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DED0BBD790CDCDEDC991CFF4 /* KXSFMidnightGlassCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3679030E6986F4698E49FD8D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -62,9 +116,20 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		2B8CF4F889FF32B2D7CF58EF /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				D20346C876C51574EE9EFB2F /* KXSFLiveActivityAttributes.swift */,
+				0E5CE7BD60832242D149AFB3 /* KXSFPlaybackSnapshot.swift */,
+			);
+			name = Shared;
+			path = App/Shared;
+			sourceTree = "<group>";
+		};
 		36D06992AEECB0F2E68F4E12 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				AACDDE3F1B85F71DD0EBFABF /* KXSFLiveActivities.appex */,
 				C7F47DBC568A4C482A389F60 /* KXSFMidnightGlass.app */,
 				052C17FD98F780DF8D69102F /* KXSFMidnightGlassUITests.xctest */,
 			);
@@ -83,7 +148,10 @@
 			isa = PBXGroup;
 			children = (
 				2818B7F3AD11A9CBFE7F4056 /* App */,
+				7A76CEF3F2EDE70658CF562E /* LiveActivity */,
+				677D6C4CCED66EFA84F7918C /* LiveActivitySupport */,
 				36E4244490FF7CA3EC885ED5 /* Packages */,
+				2B8CF4F889FF32B2D7CF58EF /* Shared */,
 				497EB4AD18A9977A4F9FE60A /* Sources */,
 				5B14996C820E378CB7D68A96 /* UITests */,
 				36D06992AEECB0F2E68F4E12 /* Products */,
@@ -95,10 +163,13 @@
 			children = (
 				087757E2A3BDDBB30506B215 /* AudioPlayerService.swift */,
 				86FDE0AC597C948C01F8DF29 /* ContentView.swift */,
+				FF52D98EE0FCEF839EE28726 /* InAppBrowser.swift */,
+				B9AF02D367B73F99D6770CC7 /* KXSFLiveActivityManager.swift */,
 				1DEF4BB7BCA273B428B01138 /* KXSFMidnightGlassApp.swift */,
 				8E4D4783D90A10118C27DBBE /* ListenView.swift */,
 				6A006DFFAD72FB435999DE95 /* LiveShowStore.swift */,
 				73D28D5F208CB405EB47A5E4 /* StationPages.swift */,
+				01DE7D759B4AA91073C714C3 /* ToggleKXSFPlaybackIntent.swift */,
 			);
 			name = Sources;
 			path = App/Sources;
@@ -113,9 +184,50 @@
 			path = App/UITests;
 			sourceTree = "<group>";
 		};
+		677D6C4CCED66EFA84F7918C /* LiveActivitySupport */ = {
+			isa = PBXGroup;
+			children = (
+				D99EA44D20B853BBEE28FE8D /* ToggleKXSFPlaybackIntent.swift */,
+			);
+			name = LiveActivitySupport;
+			path = App/LiveActivitySupport;
+			sourceTree = "<group>";
+		};
+		7A76CEF3F2EDE70658CF562E /* LiveActivity */ = {
+			isa = PBXGroup;
+			children = (
+				84888D9C63D129A93F3215DA /* Info.plist */,
+				69F8C5E6D93E6C1E308C924E /* KXSFHomeWidget.swift */,
+				BF9E60D9C175FC462D604330 /* KXSFLiveActivities.entitlements */,
+				54DC4B1FA1F360E0143F5A08 /* KXSFLiveActivities.swift */,
+				BE6E9270CF498EC7A249F0AA /* LiveArtwork.swift */,
+			);
+			name = LiveActivity;
+			path = App/LiveActivity;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		22C9AEC87185505F91442F7F /* KXSFLiveActivities */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28B108EDF6F5A42D3EE67A40 /* Build configuration list for PBXNativeTarget "KXSFLiveActivities" */;
+			buildPhases = (
+				8E9C9699E922C18B43A82984 /* Sources */,
+				1F0FD13AD81961617B54CBAA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KXSFLiveActivities;
+			packageProductDependencies = (
+				447372DAF9D27653BE175CB0 /* KXSFMidnightGlassCore */,
+			);
+			productName = KXSFLiveActivities;
+			productReference = AACDDE3F1B85F71DD0EBFABF /* KXSFLiveActivities.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		36BEF5042E4B1561CE9CAB86 /* KXSFMidnightGlassUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A67494414041622F8C7D4E88 /* Build configuration list for PBXNativeTarget "KXSFMidnightGlassUITests" */;
@@ -141,10 +253,12 @@
 				569E4A560F2580729ADAF7FC /* Sources */,
 				6974F242D0BA1519E5975895 /* Resources */,
 				3679030E6986F4698E49FD8D /* Frameworks */,
+				6D8E3F7B74B1419B6B4E4CE6 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				695B9CD3349F71854E37FD3E /* PBXTargetDependency */,
 			);
 			name = KXSFMidnightGlass;
 			packageProductDependencies = (
@@ -186,6 +300,7 @@
 			projectRoot = "";
 			targets = (
 				F03672902D13C245C575B73E /* KXSFMidnightGlass */,
+				22C9AEC87185505F91442F7F /* KXSFLiveActivities */,
 				36BEF5042E4B1561CE9CAB86 /* KXSFMidnightGlassUITests */,
 			);
 		};
@@ -209,10 +324,28 @@
 			files = (
 				A58F5D8EC6B9B9A6AB7AC439 /* AudioPlayerService.swift in Sources */,
 				278DD475470DA2DA6203EE5D /* ContentView.swift in Sources */,
+				BE889AD9D73D5223A17A470C /* InAppBrowser.swift in Sources */,
+				82659B68B33B453634F26865 /* KXSFLiveActivityAttributes.swift in Sources */,
+				1B4CBFB841DADF78A40C233D /* KXSFLiveActivityManager.swift in Sources */,
 				45930623B2CF981DDE119EEB /* KXSFMidnightGlassApp.swift in Sources */,
+				C5E6757DFC60836ACC29972D /* KXSFPlaybackSnapshot.swift in Sources */,
 				23966F4EAAE18174E700FE17 /* ListenView.swift in Sources */,
 				4C64F7CC139BD0A06AA8C24A /* LiveShowStore.swift in Sources */,
 				5C44BCB4F2471DCF880F2B73 /* StationPages.swift in Sources */,
+				D8CCEF200CAA09CC402CDE0B /* ToggleKXSFPlaybackIntent.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8E9C9699E922C18B43A82984 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A53F743C22087AE5E030B12 /* KXSFHomeWidget.swift in Sources */,
+				AA04E1842E3B94D0C5C3D3C5 /* KXSFLiveActivities.swift in Sources */,
+				05D200ECE0133522977D94B1 /* KXSFLiveActivityAttributes.swift in Sources */,
+				1C7BA17A6627276995D3EA61 /* KXSFPlaybackSnapshot.swift in Sources */,
+				041D09C74A0E15766E4BE314 /* LiveArtwork.swift in Sources */,
+				D2FE26A53B4A59CFC9EF3D95 /* ToggleKXSFPlaybackIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,6 +364,11 @@
 			isa = PBXTargetDependency;
 			target = F03672902D13C245C575B73E /* KXSFMidnightGlass */;
 			targetProxy = 7A5FE7F8C94DF63FF1670D88 /* PBXContainerItemProxy */;
+		};
+		695B9CD3349F71854E37FD3E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 22C9AEC87185505F91442F7F /* KXSFLiveActivities */;
+			targetProxy = 6D01C27622FB737DA73A68F7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -256,6 +394,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				CODE_SIGN_ENTITLEMENTS = App/KXSF.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = App/Info.plist;
@@ -270,10 +409,47 @@
 			};
 			name = Release;
 		};
+		2393D54C84E26ECADB786E0A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = App/LiveActivity/KXSFLiveActivities.entitlements;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = App/LiveActivity/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.KXSF.fm.liveactivities;
+				PRODUCT_NAME = KXSFLiveActivities;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		379360629A6B3D7BDF74F29A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = App/LiveActivity/KXSFLiveActivities.entitlements;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = App/LiveActivity/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.KXSF.fm.liveactivities;
+				PRODUCT_NAME = KXSFLiveActivities;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		40FCC03D192E48AE21B428A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				CODE_SIGN_ENTITLEMENTS = App/KXSF.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = App/Info.plist;
@@ -427,6 +603,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		28B108EDF6F5A42D3EE67A40 /* Build configuration list for PBXNativeTarget "KXSFLiveActivities" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				379360629A6B3D7BDF74F29A /* Debug */,
+				2393D54C84E26ECADB786E0A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		321854A071103CB8592B445D /* Build configuration list for PBXProject "KXSFMidnightGlass" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -464,6 +649,10 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		447372DAF9D27653BE175CB0 /* KXSFMidnightGlassCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KXSFMidnightGlassCore;
+		};
 		BC167BB657991D49952FADAC /* KXSFMidnightGlassCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = KXSFMidnightGlassCore;
